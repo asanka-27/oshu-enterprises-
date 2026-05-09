@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oshu Enterprises — Premium Motor Bike Spare Parts & Accessories</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* ============================================
+           CSS RESET & ROOT VARIABLES
+           ============================================ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #1e1e1e;
+            --accent-red: #ff3c00;
+            --accent-red-hover: #e03600;
+            --accent-orange: #ff6b2c;
+            --silver: #c0c0c0;
+            --silver-light: #d4d4d4;
+            --white: #ffffff;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255,255,255,0.7);
+            --text-muted: rgba(255,255,255,0.5);
+            --border-color: rgba(255,255,255,0.1);
+            --border-light: rgba(255,255,255,0.05);
+            --glass-bg: rgba(255,255,255,0.05);
+            --glass-border: rgba(255,255,255,0.1);
+            --shadow-red: 0 0 30px rgba(255,60,0,0.3);
+            --shadow-card: 0 8px 32px rgba(0,0,0,0.4);
+            --transition-fast: 150ms ease;
+            --transition-normal: 300ms ease;
+            --transition-slow: 500ms ease;
+            --font-main: 'Inter', sans-serif;
+            --container-max: 1280px;
+            --nav-height: 64px;
+        }
+
+        /* Light mode overrides */
+        .light-mode {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #e8e8e8;
+            --bg-card: #ffffff;
+            --text-primary: #111111;
+            --text-secondary: rgba(0,0,0,0.65);
+            --text-muted: rgba(0,0,0,0.45);
+            --border-color: rgba(0,0,0,0.12);
+            --border-light: rgba(0,0,0,0.06);
+            --glass-bg: rgba(255,255,255,0.7);
+            --glass-border: rgba(0,0,0,0.08);
+            --shadow-card: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background var(--transition-normal), color var(--transition-normal);
+        }
+
+        /* ============================================
+           LOADING SCREEN
+           ============================================ */
+        #loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+        }
+        .loader-bar-track {
+            width: 200px;
+            height: 3px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .loader-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            border-radius: 10px;
+            animation: loadBar 1.8s ease forwards;
+        }
+        @keyframes loadBar {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* ============================================
+           UTILITY CLASSES
+           ============================================ */
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-red);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 560px;
+            line-height: 1.7;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            text-decoration: none;
+            font-family: var(--font-main);
+        }
+
+        .btn-primary {
+            background: var(--accent-red);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--accent-red-hover);
+            box-shadow: var(--shadow-red);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-outline:hover {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+            transform: translateY(-2px);
+        }
+
+        /* Glow button animation */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+        .btn-glow:hover::after {
+            opacity: 1;
+        }
+
+        /* ============================================
+           SCROLL REVEAL ANIMATION
+           ============================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 100ms; }
+        .reveal-delay-2 { transition-delay: 200ms; }
+        .reveal-delay-3 { transition-delay: 300ms; }
+        .reveal-delay-4 { transition-delay: 400ms; }
+        .reveal-delay-5 { transition-delay: 500ms; }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background: rgba(15,15,15,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: background var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        .navbar.scrolled {
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+        .light-mode .navbar {
+            background: rgba(245,245,245,0.85);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        .nav-logo span {
+            color: var(--accent-red);
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        .nav-links a:hover {
+            color: var(--accent-red);
+        }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .theme-toggle {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        .theme-toggle:hover {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .hamburger span {
+            width: 22px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all var(--transition-normal);
+            border-radius: 2px;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: var(--nav-height);
+            left: 0; width: 100%;
+            height: calc(100vh - var(--nav-height));
+            background: rgba(15,15,15,0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+        .mobile-menu.open {
+            display: flex;
+        }
+        .light-mode .mobile-menu {
+            background: rgba(245,245,245,0.97);
+        }
+        .mobile-menu a {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        .mobile-menu a:hover {
+            color: var(--accent-red);
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding-top: var(--nav-height);
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+        }
+        .hero-bg img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(15,15,15,0.7) 0%,
+                rgba(15,15,15,0.85) 50%,
+                rgba(15,15,15,1) 100%
+            );
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border: 1px solid rgba(255,60,0,0.3);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent-red);
+            background: rgba(255,60,0,0.08);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        .hero-badge .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--accent-red);
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .hero-title {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+        .hero-title .accent {
+            color: var(--accent-red);
+        }
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.35rem);
+            color: var(--text-secondary);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+            opacity: 0;
+        }
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            animation: fadeInUp 0.8s ease 0.6s forwards;
+            opacity: 0;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+            animation: fadeInUp 0.8s ease 0.8s forwards;
+            opacity: 0;
+        }
+        .hero-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .hero-stat-value span {
+            color: var(--accent-red);
+        }
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================
+           ABOUT SECTION
+           ============================================ */
+        .about {
+            background: var(--bg-primary);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        .about-image-wrapper {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .about-image-wrapper img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.6s ease;
+        }
+        .about-image-wrapper:hover img {
+            transform: scale(1.03);
+        }
+        .about-image-badge {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255,60,0,0.9);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .about-text .section-desc {
+            margin-bottom: 24px;
+        }
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+        }
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .about-feature i {
+            color: var(--accent-red);
+        }
+
+        /* ============================================
+           PRODUCTS SECTION
+           ============================================ */
+        .products {
+            background: var(--bg-secondary);
+        }
+        .products-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .products-header .section-desc {
+            margin: 0 auto;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all var(--transition-normal);
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-card);
+            border-color: rgba(255,60,0,0.2);
+        }
+        .product-image {
+            position: relative;
+            overflow: hidden;
+            background: #111;
+        }
+        .product-image img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .product-card:hover .product-image img {
+            transform: scale(1.08);
+        }
+        .product-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--accent-red);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .product-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+        .product-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        .product-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-red);
+        }
+        .product-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        .product-btn:hover {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+            color: #fff;
+        }
+
+        /* ============================================
+           FEATURED ACCESSORIES
+           ============================================ */
+        .featured {
+            background: var(--bg-primary);
+        }
+        .featured-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 48px;
+        }
+        .featured-scroll {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            padding-bottom: 16px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .featured-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+        .featured-scroll::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+        .featured-scroll::-webkit-scrollbar-thumb {
+            background: var(--accent-red);
+            border-radius: 10px;
+        }
+        .featured-card {
+            min-width: 300px;
+            scroll-snap-align: start;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all var(--transition-normal);
+            flex-shrink: 0;
+        }
+        .featured-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-card);
+            border-color: rgba(255,60,0,0.2);
+        }
+        .featured-card-img {
+            position: relative;
+            overflow: hidden;
+        }
+        .featured-card-img img {
+            width: 100%;
+            aspect-ratio: 16/10;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .featured-card:hover .featured-card-img img {
+            transform: scale(1.06);
+        }
+        .featured-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            color: var(--accent-orange);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .featured-card-info {
+            padding: 20px;
+        }
+        .featured-card-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .featured-card-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .featured-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .featured-card-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-red);
+        }
+        .featured-card-btn {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-red);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: gap var(--transition-fast);
+        }
+        .featured-card-btn:hover {
+            gap: 8px;
+        }
+
+        /* ============================================
+           WHY CHOOSE US
+           ============================================ */
+        .why-us {
+            background: var(--bg-secondary);
+        }
+        .why-us-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .why-us-header .section-desc {
+            margin: 0 auto;
+        }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+        }
+        .why-card {
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-card);
+            transition: all var(--transition-normal);
+        }
+        .why-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255,60,0,0.3);
+            box-shadow: 0 0 30px rgba(255,60,0,0.08);
+        }
+        .why-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: rgba(255,60,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--accent-red);
+            transition: all var(--transition-normal);
+        }
+        .why-card:hover .why-icon {
+            background: var(--accent-red);
+            color: #fff;
+        }
+        .why-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        .why-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           REVIEWS / TESTIMONIALS
+           ============================================ */
+        .reviews {
+            background: var(--bg-primary);
+        }
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .reviews-header .section-desc {
+            margin: 0 auto;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .review-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 32px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all var(--transition-normal);
+        }
+        .review-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,60,0,0.2);
+        }
+        .review-stars {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 16px;
+        }
+        .review-stars i {
+            color: #facc15;
+            width: 16px;
+            height: 16px;
+        }
+        .review-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .review-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-red);
+        }
+        .review-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .review-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* ============================================
+           CONTACT SECTION
+           ============================================ */
+        .contact {
+            background: var(--bg-secondary);
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        .form-group input,
+        .form-group textarea {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color var(--transition-fast);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-red);
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .contact-info-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .contact-info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            transition: all var(--transition-normal);
+        }
+        .contact-info-card:hover {
+            border-color: rgba(255,60,0,0.2);
+        }
+        .contact-info-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            background: rgba(255,60,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-red);
+            flex-shrink: 0;
+        }
+        .contact-info-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .contact-info-value {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        .contact-map {
+            margin-top: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+        .contact-map iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+            filter: grayscale(0.8) invert(0.9) contrast(1.1);
+        }
+        .light-mode .contact-map iframe {
+            filter: none;
+        }
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .social-link {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+        }
+        .social-link:hover {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+            color: #fff;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: #0a0a0a;
+            border-top: 1px solid var(--border-light);
+        }
+        .light-mode .footer {
+            background: #e0e0e0;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            padding: 64px 0 40px;
+        }
+        .footer-brand-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .footer-brand-name span {
+            color: var(--accent-red);
+        }
+        .footer-brand-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        .footer-socials {
+            display: flex;
+            gap: 10px;
+        }
+        .footer-social {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+        }
+        .footer-social:hover {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+        .footer-col-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .footer-links a {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        .footer-links a:hover {
+            color: var(--accent-red);
+        }
+        .footer-bottom {
+            border-top: 1px solid var(--border-light);
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-copyright {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .footer-copyright a {
+            color: var(--accent-red);
+            text-decoration: none;
+        }
+
+        /* ============================================
+           SCROLL TO TOP
+           ============================================ */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: var(--accent-red);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all var(--transition-normal);
+            z-index: 100;
+            box-shadow: var(--shadow-red);
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .scroll-top:hover {
+            transform: translateY(-4px);
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        @media (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .why-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 64px 0;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .hero-stats {
+                gap: 24px;
+                flex-wrap: wrap;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .why-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .reviews-grid {
+                grid-template-columns: 1fr;
+                max-width: 480px;
+                margin: 0 auto;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+            .featured-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+            }
+            .hero-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .hero-stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+            .featured-card {
+                min-width: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== LOADING SCREEN ========== -->
+    <div id="loader">
+        <div class="loader-logo">OSHU</div>
+        <div class="loader-bar-track">
+            <div class="loader-bar-fill"></div>
+        </div>
+    </div>
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">OSHU<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#featured">Accessories</a></li>
+                <li><a href="#why-us">Why Us</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i data-lucide="moon" style="width:18px;height:18px;"></i>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" onclick="closeMobile()">Home</a>
+        <a href="#about" onclick="closeMobile()">About</a>
+        <a href="#products" onclick="closeMobile()">Products</a>
+        <a href="#featured" onclick="closeMobile()">Accessories</a>
+        <a href="#why-us" onclick="closeMobile()">Why Us</a>
+        <a href="#reviews" onclick="closeMobile()">Reviews</a>
+        <a href="#contact" onclick="closeMobile()">Contact</a>
+    </div>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <img src="https://picsum.photos/seed/motorcycle-dark-ride/1920/1080.jpg" alt="Motorcycle Background">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Trusted Since 2015
+            </div>
+            <h1 class="hero-title">
+                Oshu<br><span class="accent">Enterprises</span>
+            </h1>
+            <p class="hero-subtitle">
+                Premium Motor Bike Spare Parts & Accessories. Performance upgrades, genuine replacements, and custom gear for every rider.
+            </p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary btn-glow">
+                    <i data-lucide="shopping-bag" style="width:18px;height:18px;"></i>
+                    Shop Products
+                </a>
+                <a href="#contact" class="btn btn-outline btn-glow">
+                    <i data-lucide="phone" style="width:18px;height:18px;"></i>
+                    Contact Us
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div>
+                    <div class="hero-stat-value">5K<span>+</span></div>
+                    <div class="hero-stat-label">Products Sold</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value">2K<span>+</span></div>
+                    <div class="hero-stat-label">Happy Riders</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value">50<span>+</span></div>
+                    <div class="hero-stat-label">Top Brands</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value">10<span>+</span></div>
+                    <div class="hero-stat-label">Years Experience</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ABOUT SECTION ========== -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image-wrapper reveal">
+                    <img src="https://picsum.photos/seed/bike-mechanic-garage/800/600.jpg" alt="Bike Garage">
+                    <div class="about-image-badge">Est. 2015</div>
+                </div>
+                <div class="about-text">
+                    <span class="section-label reveal">About Us</span>
+                    <h2 class="section-title reveal reveal-delay-1">Built for Riders,<br>Powered by <span style="color:var(--accent-red)">Passion</span></h2>
+                    <p class="section-desc reveal reveal-delay-2">
+                        Oshu Enterprises is your one-stop destination for high-quality motorcycle spare parts, trusted accessories, and performance upgrades. We understand what riders need because we're riders ourselves.
+                    </p>
+                    <p class="section-desc reveal reveal-delay-3">
+                        From genuine OEM replacements to custom aftermarket parts, we ensure every product meets the highest standards of quality and durability. Customer satisfaction isn't just a promise — it's our foundation.
+                    </p>
+                    <div class="about-features">
+                        <div class="about-feature reveal reveal-delay-2">
+                            <i data-lucide="check-circle" style="width:18px;height:18px;"></i>
+                            High-Quality Parts
+                        </div>
+                        <div class="about-feature reveal reveal-delay-3">
+                            <i data-lucide="check-circle" style="width:18px;height:18px;"></i>
+                            Trusted Accessories
+                        </div>
+                        <div class="about-feature reveal reveal-delay-4">
+                            <i data-lucide="check-circle" style="width:18px;height:18px;"></i>
+                            Performance Upgrades
+                        </div>
+                        <div class="about-feature reveal reveal-delay-5">
+                            <i data-lucide="check-circle" style="width:18px;height:18px;"></i>
+                            100% Satisfaction
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PRODUCTS SECTION ========== -->
+    <section class="section products" id="products">
+        <div class="container">
+            <div class="products-header">
+                <span class="section-label reveal">Our Products</span>
+                <h2 class="section-title reveal reveal-delay-1">Premium Spare Parts &<br><span style="color:var(--accent-red)">Bike Accessories</span></h2>
+                <p class="section-desc reveal reveal-delay-2">Explore our curated collection of top-tier motorcycle parts and accessories built for performance and style.</p>
+            </div>
+            <div class="products-grid">
+                <!-- Product 1: Helmets -->
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <img src="https://picsum.photos/seed/motorcycle-helmet-black/600/600.jpg" alt="Helmet">
+                        <span class="product-tag">Bestseller</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Racing Helmet Pro</div>
+                        <div class="product-desc">DOT certified, aerodynamic design with anti-fog visor</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$189.99</span>
+                            <button class="product-btn"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 2: Bike Lights -->
+                <div class="product-card reveal reveal-delay-1">
+                    <div class="product-image">
+                        <img src="https://picsum.photos/seed/led-bike-headlight/600/600.jpg" alt="Bike Lights">
+                        <span class="product-tag">New</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">LED Headlight Kit</div>
+                        <div class="product-desc">6000K ultra-bright, plug & play for all models</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$59.99</span>
+                            <button class="product-btn"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 3: Brake Pads -->
+                <div class="product-card reveal reveal-delay-2">
+                    <div class="product-image">
+                        <img src="https://picsum.photos/seed/motorcycle-brake-pads/600/600.jpg" alt="Brake Pads">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Ceramic Brake Pads</div>
+                        <div class="product-desc">High-friction, low-noise performance brake pads</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$34.99</span>
+                            <button class="product-btn"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 4: Engine Oil -->
+                <div class="product-card reveal reveal-delay-3">
+                    <div class="product-image">
+                        <img src="https://picsum.photos/seed/motorcycle-engine-oil/600/600.jpg" alt="Engine Oil">
+                        <span class="product-tag">Popular</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Synthetic Engine Oil</div>
+                        <div class="product-desc">10W-50 full synthetic for maximum engine protection</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$24.99</span>
+                            <button class="product-btn"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 5: Side Mirrors -->
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <img src="https://picsum.photos/seed/bar-end-mirrors/600/600.jpg" alt="Side Mirrors">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Bar End Mirrors</div>
+                        <div class="product-desc">CNC aluminum, convex glass, universal fit</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$42.99</span>
+                            <button class="product-btn"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 6: Exhaust Systems -->
+                <div class="product-card reveal reveal-delay-1">
+                    <div class="product-image">
+                        <img src="https://picsum.photos/seed/motorcycle-exhaust-system/600/600.jpg" alt="Exhaust System">
+                        <span class="product-tag">Premium</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Titanium Exhaust System</div>
+                        <div class="product-desc">Lightweight, race-grade with deep rumble sound</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$449.99</span>
+                            <button class="product-btn"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 7: Riding Gloves -->
+                <div class="product-card reveal reveal-delay-2">
+                    <div class="product-image">
+                        <img src="https://picsum.photos/seed/motorcycle-gloves-leather/600/600.jpg" alt="Riding Gloves">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Armored Riding Gloves</div>
+                        <div class="product-desc">Full leather with knuckle protection & grip</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$54.99</span>
+                            <button class="product-btn"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 8: Performance Parts -->
+                <div class="product-card reveal reveal-delay-3">
+                    <div class="product-image">
+                        <img src="https://picsum.photos/seed/motorcycle-performance-chip/600/600.jpg" alt="Performance Parts">
+                        <span class="product-tag">Hot</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">ECU Performance Chip</div>
+                        <div class="product-desc">Unlock hidden HP, adjustable mapping profiles</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$129.99</span>
+                            <button class="product-btn"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FEATURED ACCESSORIES ========== -->
+    <section class="section featured" id="featured">
+        <div class="container">
+            <div class="featured-header">
+                <div>
+                    <span class="section-label reveal">Featured Collection</span>
+                    <h2 class="section-title reveal reveal-delay-1">Premium <span style="color:var(--accent-red)">Accessories</span></h2>
+                    <p class="section-desc reveal reveal-delay-2">Handpicked accessories for riders who demand the best.</p>
+                </div>
+                <a href="#products" class="btn btn-outline reveal" style="height:fit-content;">
+                    View All
+                    <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                </a>
+            </div>
+            <div class="featured-scroll">
+                <!-- Accessory 1 -->
+                <div class="featured-card reveal">
+                    <div class="featured-card-img">
+                        <img src="https://picsum.photos/seed/racing-helmet-premium/600/375.jpg" alt="Racing Helmet">
+                        <span class="featured-badge">Premium</span>
+                    </div>
+                    <div class="featured-card-info">
+                        <div class="featured-card-name">Racing Helmet X9</div>
+                        <div class="featured-card-desc">Carbon fiber shell, integrated sun visor, wind-tunnel tested aerodynamics.</div>
+                        <div class="featured-card-footer">
+                            <span class="featured-card-price">$329.99</span>
+                            <a href="#" class="featured-card-btn">
+                                View Details <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accessory 2 -->
+                <div class="featured-card reveal reveal-delay-1">
+                    <div class="featured-card-img">
+                        <img src="https://picsum.photos/seed/led-strip-lights-bike/600/375.jpg" alt="LED Lights">
+                        <span class="featured-badge">Trending</span>
+                    </div>
+                    <div class="featured-card-info">
+                        <div class="featured-card-name">RGB LED Strip Kit</div>
+                        <div class="featured-card-desc">Waterproof, app-controlled, 16 million colors with brake sync.</div>
+                        <div class="featured-card-footer">
+                            <span class="featured-card-price">$79.99</span>
+                            <a href="#" class="featured-card-btn">
+                                View Details <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accessory 3 -->
+                <div class="featured-card reveal reveal-delay-2">
+                    <div class="featured-card-img">
+                        <img src="https://picsum.photos/seed/custom-exhaust-slip/600/375.jpg" alt="Custom Exhaust">
+                        <span class="featured-badge">Exclusive</span>
+                    </div>
+                    <div class="featured-card-info">
+                        <div class="featured-card-name">Sl-On Custom Exhaust</div>
+                        <div class="featured-card-desc">Stainless steel, removable baffle, Euro 4 compliant deep tone.</div>
+                        <div class="featured-card-footer">
+                            <span class="featured-card-price">$389.99</span>
+                            <a href="#" class="featured-card-btn">
+                                View Details <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accessory 4 -->
+                <div class="featured-card reveal reveal-delay-3">
+                    <div class="featured-card-img">
+                        <img src="https://picsum.photos/seed/phone-mount-motorcycle/600/375.jpg" alt="Phone Holder">
+                        <span class="featured-badge">Essential</span>
+                    </div>
+                    <div class="featured-card-info">
+                        <div class="featured-card-name">Secure Phone Mount</div>
+                        <div class="featured-card-desc">Vibration-dampened, one-hand operation, USB-C charging built-in.</div>
+                        <div class="featured-card-footer">
+                            <span class="featured-card-price">$39.99</span>
+                            <a href="#" class="featured-card-btn">
+                                View Details <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accessory 5 -->
+                <div class="featured-card reveal reveal-delay-4">
+                    <div class="featured-card-img">
+                        <img src="https://picsum.photos/seed/riding-jacket-armored/600/375.jpg" alt="Riding Jacket">
+                        <span class="featured-badge">New</span>
+                    </div>
+                    <div class="featured-card-info">
+                        <div class="featured-card-name">Armored Riding Jacket</div>
+                        <div class="featured-card-desc">CE Level 2 armor, mesh ventilation, reflective accents for night safety.</div>
+                        <div class="featured-card-footer">
+                            <span class="featured-card-price">$249.99</span>
+                            <a href="#" class="featured-card-btn">
+                                View Details <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== WHY CHOOSE US ========== -->
+    <section class="section why-us" id="why-us">
+        <div class="container">
+            <div class="why-us-header">
+                <span class="section-label reveal">Why Choose Us</span>
+                <h2 class="section-title reveal reveal-delay-1">The Oshu <span style="color:var(--accent-red)">Advantage</span></h2>
+                <p class="section-desc reveal reveal-delay-2">We don't just sell parts — we deliver trust, quality, and a riding experience that's second to none.</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-card reveal">
+                    <div class="why-icon">
+                        <i data-lucide="shield-check" style="width:24px;height:24px;"></i>
+                    </div>
+                    <div class="why-title">Genuine Products</div>
+                    <div class="why-desc">100% authentic OEM and certified aftermarket parts only.</div>
+                </div>
+                <div class="why-card reveal reveal-delay-1">
+                    <div class="why-icon">
+                        <i data-lucide="badge-dollar-sign" style="width:24px;height:24px;"></i>
+                    </div>
+                    <div class="why-title">Affordable Prices</div>
+                    <div class="why-desc">Competitive pricing without compromising on quality.</div>
+                </div>
+                <div class="why-card reveal reveal-delay-2">
+                    <div class="why-icon">
+                        <i data-lucide="truck" style="width:24px;height:24px;"></i>
+                    </div>
+                    <div class="why-title">Fast Delivery</div>
+                    <div class="why-desc">Same-day dispatch with nationwide express shipping.</div>
+                </div>
+                <div class="why-card reveal reveal-delay-3">
+                    <div class="why-icon">
+                        <i data-lucide="headset" style="width:24px;height:24px;"></i>
+                    </div>
+                    <div class="why-title">Expert Support</div>
+                    <div class="why-desc">Mechanic-trained team ready to help you choose right.</div>
+                </div>
+                <div class="why-card reveal reveal-delay-4">
+                    <div class="why-icon">
+                        <i data-lucide="award" style="width:24px;height:24px;"></i>
+                    </div>
+                    <div class="why-title">Quality Guarantee</div>
+                    <div class="why-desc">30-day warranty on all products, no questions asked.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CUSTOMER REVIEWS ========== -->
+    <section class="section reviews" id="reviews">
+        <div class="container">
+            <div class="reviews-header">
+                <span class="section-label reveal">Testimonials</span>
+                <h2 class="section-title reveal reveal-delay-1">What Riders <span style="color:var(--accent-red)">Say</span></h2>
+                <p class="section-desc reveal reveal-delay-2">Real feedback from real riders who trust Oshu Enterprises.</p>
+            </div>
+            <div class="reviews-grid">
+                <!-- Review 1 -->
+                <div class="review-card reveal">
+                    <div class="review-stars">
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                    </div>
+                    <p class="review-text">"Best place for genuine bike parts! Got my brake pads and exhaust here — quality is insane. The team really knows their stuff."</p>
+                    <div class="review-author">
+                        <img src="https://picsum.photos/seed/rider-alex/100/100.jpg" alt="Alex" class="review-avatar">
+                        <div>
+                            <div class="review-name">Alex Rivera</div>
+                            <div class="review-role">Ducati Rider</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 2 -->
+                <div class="review-card reveal reveal-delay-1">
+                    <div class="review-stars">
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                    </div>
+                    <p class="review-text">"Fast delivery and the LED headlight kit was exactly as described. Installation was a breeze. Will definitely order again!"</p>
+                    <div class="review-author">
+                        <img src="https://picsum.photos/seed/rider-priya/100/100.jpg" alt="Priya" class="review-avatar">
+                        <div>
+                            <div class="review-name">Priya Sharma</div>
+                            <div class="review-role">KTM Enthusiast</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 3 -->
+                <div class="review-card reveal reveal-delay-2">
+                    <div class="review-stars">
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;stroke:#facc15;"></i>
+                        <i data-lucide="star" style="width:16px;height:16px;stroke:#facc15;fill:none;"></i>
+                    </div>
+                    <p class="review-text">"The riding jacket I got is top-notch. Great protection and looks amazing. Customer service was super helpful with sizing."</p>
+                    <div class="review-author">
+                        <img src="https://picsum.photos/seed/rider-marcus/100/100.jpg" alt="Marcus" class="review-avatar">
+                        <div>
+                            <div class="review-name">Marcus Chen</div>
+                            <div class="review-role">Yamaha R1 Owner</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CONTACT SECTION ========== -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div>
+                    <span class="section-label reveal">Get in Touch</span>
+                    <h2 class="section-title reveal reveal-delay-1">Contact <span style="color:var(--accent-red)">Us</span></h2>
+                    <p class="section-desc reveal reveal-delay-2" style="margin-bottom:32px;">Have a question or need help finding the right part? Drop us a message and we'll get back to you within 24 hours.</p>
+                    <form class="contact-form" onsubmit="handleSubmit(event)">
+                        <div class="form-row reveal">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group reveal reveal-delay-1">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+1 (555) 000-0000">
+                        </div>
+                        <div class="form-group reveal reveal-delay-2">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" placeholder="Tell us about the parts or accessories you're looking for..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-glow reveal reveal-delay-3" style="width:fit-content;">
+                            <i data-lucide="send" style="width:18px;height:18px;"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                <!-- Contact Info -->
+                <div>
+                    <div class="contact-info-cards">
+                        <div class="contact-info-card reveal">
+                            <div class="contact-info-icon">
+                                <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
+                            </div>
+                            <div>
+                                <div class="contact-info-label">Address</div>
+                                <div class="contact-info-value">123 Bike Lane, Industrial Zone, Motor City, MC 45678</div>
+                            </div>
+                        </div>
+                        <div class="contact-info-card reveal reveal-delay-1">
+                            <div class="contact-info-icon">
+                                <i data-lucide="phone" style="width:20px;height:20px;"></i>
+                            </div>
+                            <div>
+                                <div class="contact-info-label">Phone</div>
+                                <div class="contact-info-value">+1 (555) 123-4567</div>
+                            </div>
+                        </div>
+                        <div class="contact-info-card reveal reveal-delay-2">
+                            <div class="contact-info-icon">
+                                <i data-lucide="mail" style="width:20px;height:20px;"></i>
+                            </div>
+                            <div>
+                                <div class="contact-info-label">Email</div>
+                                <div class="contact-info-value">info@oshuenterprises.com</div>
+                            </div>
+                        </div>
+                        <div class="contact-info-card reveal reveal-delay-3">
+                            <div class="contact-info-icon">
+                                <i data-lucide="clock" style="width:20px;height:20px;"></i>
+                            </div>
+                            <div>
+                                <div class="contact-info-label">Business Hours</div>
+                                <div class="contact-info-value">Mon - Sat: 9:00 AM - 7:00 PM</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Google Maps -->
+                    <div class="contact-map reveal reveal-delay-3">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.8354345093747!2d-122.4194!3d37.7749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ2JzI5LjYiTiAxMjLCsDI1JzA5LjgiVw!5e0!3m2!1sen!2sus!4v1234567890" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <!-- Social Links -->
+                    <div class="social-links reveal reveal-delay-4">
+                        <a href="#" class="social-link" aria-label="Facebook"><i data-lucide="facebook" style="width:18px;height:18px;"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i data-lucide="instagram" style="width:18px;height:18px;"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i data-lucide="twitter" style="width:18px;height:18px;"></i></a>
+                        <a href="#" class="social-link" aria-label="Youtube"><i data-lucide="youtube" style="width:18px;height:18px;"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand-name">OSHU<span>.</span></div>
+                    <p class="footer-brand-desc">Premium motorcycle spare parts and accessories. Built for riders who demand performance, quality, and style.</p>
+                    <div class="footer-socials">
+                        <a href="#" class="footer-social" aria-label="Facebook"><i data-lucide="facebook" style="width:16px;height:16px;"></i></a>
+                        <a href="#" class="footer-social" aria-label="Instagram"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
+                        <a href="#" class="footer-social" aria-label="Twitter"><i data-lucide="twitter" style="width:16px;height:16px;"></i></a>
+                        <a href="#" class="footer-social" aria-label="Youtube"><i data-lucide="youtube" style="width:16px;height:16px;"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer-col-title">Quick Links</div>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Products</div>
+                    <ul class="footer-links">
+                        <li><a href="#products">Helmets</a></li>
+                        <li><a href="#products">Bike Lights</a></li>
+                        <li><a href="#products">Brake Pads</a></li>
+                        <li><a href="#products">Engine Oil</a></li>
+                        <li><a href="#products">Exhaust Systems</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Support</div>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copyright">&copy; 2026 <a href="#">Oshu Enterprises</a>. All Rights Reserved.</div>
+                <div class="footer-copyright">Designed with 🏍️ for riders</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== SCROLL TO TOP ========== -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+        <i data-lucide="chevron-up" style="width:22px;height:22px;"></i>
+    </button>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // ===== LOADING SCREEN =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 2000);
+        });
+
+        // ===== STICKY NAVBAR =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ===== HAMBURGER MENU =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('open');
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+        });
+
+        function closeMobile() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // ===== DARK / LIGHT MODE TOGGLE =====
+        const themeToggle = document.getElementById('themeToggle');
+        let isDark = true;
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            document.body.classList.toggle('light-mode');
+            // Swap icon
+            const icon = themeToggle.querySelector('i');
+            icon.setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+            lucide.createIcons();
+        });
+
+        // ===== SCROLL REVEAL =====
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ===== SCROLL TO TOP =====
+        const scrollTopBtn = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== CONTACT FORM HANDLER =====
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<span style="margin-right:8px;">✓</span> Message Sent!';
+            btn.style.background = '#16a34a';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.style.background = '';
+                btn.disabled = false;
+                e.target.reset();
+                lucide.createIcons();
+            }, 3000);
+        }
+
+        // ===== SMOOTH SCROLL FOR NAV LINKS =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
